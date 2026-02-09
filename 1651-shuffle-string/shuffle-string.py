@@ -3,7 +3,6 @@ class Solution:
         table = {}
         for x, y in zip(s, indices):
             table[y] = x
-        print(table)
         res = ""
         for i in range(len(s)):
             res += table[i]
