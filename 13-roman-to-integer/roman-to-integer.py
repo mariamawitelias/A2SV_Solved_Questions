@@ -10,9 +10,15 @@ class Solution:
             'D': 500,
             'M': 1000
         }
-        for a, b in zip(s, s[1:]):
-            if roman[a] < roman[b]:
-                res -= roman[a]
+        prev = 0
+        total = 0
+        for i in range(len(s) - 1, -1, -1):
+            ch = s[i]
+            num = roman[ch]
+            if num < prev:
+                total -= num
             else:
-                res += roman[a]
-        return res + roman[s[-1]] 
+                total += num
+            prev = num
+        return total
+        
