@@ -8,9 +8,8 @@ class Solution:
                     res.append(i)
                     count[i] -= 1
         for i in s:
-            if i not in res:
-                while count[i] != 0:
-                    res.append(i)
-                    count[i] -= 1
+            while count[i] != 0:
+                res.append(i)
+                count[i] -= 1
         return "".join(res)
         
