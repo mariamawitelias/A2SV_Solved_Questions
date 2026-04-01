@@ -2,15 +2,19 @@ class Solution:
     def getHappyString(self, n: int, k: int) -> str:
         res = []
         lis = ['a', 'b', 'c']
-        def backtrack(i, sub):
+        count = [0]
+        sub = []
+        def backtrack(i):
             if len(sub) == n:
-                res.append("".join(sub))
+                count[0] += 1
                 return
             for j in range(len(lis)):
                 if j == i:
                     continue
                 sub.append(lis[j])
-                backtrack(j, sub)
+                backtrack(j) 
+                if count[0] == k:
+                    return
                 sub.pop()
-        backtrack(-1, [])
-        return res[k-1] if k <= len(res) else ""
+        backtrack(-1)
+        return "".join(sub)
