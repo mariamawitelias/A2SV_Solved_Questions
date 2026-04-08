@@ -9,7 +9,7 @@ class Solution:
                     yene += 1
                     prev = pos
             return yene >= m
-        l, r = 1, 10**18
+        l, r = 1, max(poss) - min(poss)
         while l <= r:
             mid = (l + r) // 2
             if checker(mid) == True:
