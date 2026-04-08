@@ -6,7 +6,7 @@ class Solution:
                 lijoch += pile // candy
             return lijoch >= k
         
-        l, r = 1, 10**18
+        l, r = 1, max(candies)
         while l <= r:
             mid = (l + r) // 2
             if checker(mid) == True:
