@@ -1,21 +1,24 @@
 class Solution:
     def getAncestors(self, n: int, edges: List[List[int]]) -> List[List[int]]:
         adj = defaultdict(list)
+        indeg = [0] * n
         q = deque()
         for fro, to in edges:
-            adj[to].append(fro)
+            adj[fro].append(to)
+            indeg[to] += 1
         
-        ans = []
+        ans = [set() for _ in range(n)]
         for node in range(n):
-            ancestor = set()
-            q.append(node)
-            while q:
-                node = q.popleft()
-                for i in adj[node]:
-                    if i not in ancestor:
-                        ancestor.add(i)
-                        q.append(i)
-            ans.append(sorted(ancestor))
-        return ans
-                    
-
+            if indeg[node] == 0:
+                q.append(node)
+        while q:
+            node = q.popleft()
+            for lij in adj[node]:
+                indeg[lij] -= 1
+                if indeg[lij] == 0:
+                    q.append(lij)
+                ans[lij].add(node)
+                # ans[lij] |= ans[node]
+                for myancestor in ans[node]:
+                    ans[lij].add(myancestor)
+        return [sorted(a) for a in ans]
