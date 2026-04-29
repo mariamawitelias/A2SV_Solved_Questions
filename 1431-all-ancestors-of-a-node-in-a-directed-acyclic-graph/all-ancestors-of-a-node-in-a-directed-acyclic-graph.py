@@ -18,7 +18,7 @@ class Solution:
                 if indeg[lij] == 0:
                     q.append(lij)
                 ans[lij].add(node)
-                # ans[lij] |= ans[node]
-                for myancestor in ans[node]:
-                    ans[lij].add(myancestor)
+                ans[lij] |= ans[node]
+                # for myancestor in ans[node]:
+                #     ans[lij].add(myancestor)
         return [sorted(a) for a in ans]
