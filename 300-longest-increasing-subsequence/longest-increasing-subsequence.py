@@ -1,26 +1,13 @@
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
-        res = []
-
-        def binary_search(res, n):
-            left = 0
-            right = len(res) - 1
-
-            while left <= right:
-                mid = (left + right) // 2
-                if res[mid] == n:
-                    return mid
-                elif res[mid] > n:
-                    right = mid - 1
-                else:
-                    left = mid + 1
-            
-            return left
-
-        for n in nums:
-            if not res or res[-1] < n:
-                res.append(n)
-            else:
-                idx = binary_search(res, n)
-                res[idx] = n 
-        return len(res)
+        memo = [[-1] * (len(nums) + 1) for _ in range(len(nums))]
+        def dp(i, last):
+            if i == len(nums):
+                return 0
+            if memo[i][last] == -1:
+                inc = 0
+                if last == -1 or nums[last] < nums[i]:
+                    inc = 1 + dp(i+1, i)
+                memo[i][last] = max(inc, dp(i+1, last))
+            return(memo[i][last])
+        return dp(0, -1)
