@@ -5,32 +5,22 @@ class Solution(object):
         :rtype: int
         """
         n = len(prices)
-        # memo[day][holding_status]
         memo = [[-1 for _ in range(2)] for _ in range(n)]
-
         def dp(i, bought):
-            # Base Case: Out of days
             if i >= n:
                 return 0
-
-            # Check cache
+            res = 0
             if memo[i][bought] != -1:
                 return memo[i][bought]
 
             if not bought:
-                # Option 1: Buy today
-                buy = dp(i + 1, True) - prices[i]
-                # Option 2: Skip buying today
-                skip_buy = dp(i + 1, False)
-                result = max(buy, skip_buy)
+                buy = dp(i+1, True) - prices[i]
+                skip = dp(i+1, False)
+                res = max(buy, skip)
             else:
-                # Option 1: Sell today (enforce 1-day cooldown with i + 2)
-                sell = dp(i + 2, False) + prices[i]
-                # Option 2: Skip selling today
-                skip_sell = dp(i + 1, True)
-                result = max(sell, skip_sell)
-
-            memo[i][bought] = result
-            return result
-
+                sell = dp(i+2, False) + prices[i]
+                skips = dp(i+1, True)
+                res = max(sell, skips)
+            memo[i][bought] = res
+            return res
         return dp(0, False)
