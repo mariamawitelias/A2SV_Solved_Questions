@@ -1,11 +1,11 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
         memo = {}
-        def dp(n):
-            if n < 3:
-                return n
-            if n not in memo:
-                memo[n] = dp(n-1)+ dp(n-2)
-            return memo[n]
+        def dp(N):
+            if N < 3:
+                return N
+            if N not in memo:
+                memo[N] = dp(N-1)+ dp(N-2)
+            return memo[N]
         return dp(n)
     
